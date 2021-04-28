@@ -4,5 +4,5 @@ echo $path\src
 docker run `
     --name repo_gem5 `
     -it `
-    --volume $path\src:/usr/local/src `
+    --volume $path\src\String_Matching:/usr/local/src/gem5_profile/String_Matching `
     kyens0612/gem5_profile:latest
