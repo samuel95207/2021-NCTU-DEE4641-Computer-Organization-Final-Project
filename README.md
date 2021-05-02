@@ -2,11 +2,13 @@
 * Requirement: Docker
 * Run the following Commands to run docker
 ```
-powershell .\docker_run.ps1
+.\docker_run.ps1
 ```
 * Run the following Commands to enter docker
 ```
 docker exec -ti repo_gem5 bash
+# or
+./docker_join.ps1
 ```
 * Run the following Commands in docker to build gem5
 ```
