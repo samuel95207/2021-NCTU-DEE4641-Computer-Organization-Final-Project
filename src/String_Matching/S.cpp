@@ -19,7 +19,8 @@ void search(char *pat, char *txt, int *suffArr, int n)
     while (l != r)
     {
         int mid = (l + r) / 2;
-        int res = strncmp(pat, txt+suffArr[mid], strlen(txt+suffArr[mid]));
+        const char * cmpStr = txt+suffArr[mid];
+        int res = strncmp(pat, cmpStr, strlen(cmpStr));
         if (res < 0) r = mid;
         else l = mid + 1;
     }
