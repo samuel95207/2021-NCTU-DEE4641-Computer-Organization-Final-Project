@@ -23,7 +23,7 @@ build/X86/gem5.opt configs/example/se.py -c String_Matching/main \
     --l1d_assoc=1 \
     --l1i_size=16kB \
     --caches \
-    --mem-type=DDR4_2400_8x8 \
+    --mem-type=DDR4_2400_4x16 \
     --mem-channels=1 \
-    --mem-size=16GB
+    --mem-size=4GB
 ```
