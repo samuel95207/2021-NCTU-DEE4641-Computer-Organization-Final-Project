@@ -9,10 +9,10 @@
 
 #define OCC_SAMPLING_DIST 1
 
-uint32_t encode_to_int(const std::string &string_to_encode)
+uint32_t encode_to_int(const char &string_to_encode)
 {
     int encoded_value;
-    switch (string_to_encode[0])
+    switch (string_to_encode)
     {
     case 'A':
         encoded_value = 0;
@@ -59,18 +59,18 @@ void build_tables(const std::string &reference_string, std::vector<uint32_t> &F_
     for (int i = 0; i < rotate_and_sort_strings.size(); ++i)
     {
         // create F_offsets
-        std::string F_string = rotate_and_sort_strings[i].substr(0, 1);
-        uint32_t encoded_F = encode_to_int(F_string);
+        uint32_t encoded_F = encode_to_int(rotate_and_sort_strings[i][0]);
         if (F_offsets[encoded_F] == reference_string_length)
         {
             F_offsets[encoded_F] = i;
         }
 
         // create L_column
-        L_column.push_back(rotate_and_sort_strings[i][reference_string_length - 1]);
+        char c = rotate_and_sort_strings[i][reference_string_length - 1];
+        L_column.push_back(c);
 
         // create occ_table
-        uint32_t encoded_L = encode_to_int(rotate_and_sort_strings[i].substr(reference_string_length - 1));
+        uint32_t encoded_L = encode_to_int(c);
         ++running_occ[encoded_L];
         if (i % OCC_SAMPLING_DIST == 0)
         {
@@ -86,7 +86,7 @@ void search_pattern(const std::string &pattern, std::vector<uint32_t> &F_offsets
     uint32_t range_max;
     uint32_t update_range_min;
     uint32_t update_range_max;
-    uint32_t encoded_F = encode_to_int(pattern.substr(pattern.size() - 1));
+    uint32_t encoded_F = encode_to_int(pattern[pattern.size() - 1]);
 
     range_min = F_offsets[encoded_F];
     if(pattern.substr(pattern.size() - 1) != "T") range_max = F_offsets[encoded_F + 1] - 1;
@@ -96,7 +96,7 @@ void search_pattern(const std::string &pattern, std::vector<uint32_t> &F_offsets
 
     for(uint32_t search_round = 0; search_round < pattern.size() - 1; search_round++){
 
-        uint32_t encoded_L = encode_to_int(pattern.substr(pattern.size() - search_round - 2, 1));
+        uint32_t encoded_L = encode_to_int(pattern[pattern.size() - search_round - 2]);
 
         //update range_min
         update_range_min = F_offsets[encoded_L] + occ_table[range_min / OCC_SAMPLING_DIST][encoded_L] - 1;
