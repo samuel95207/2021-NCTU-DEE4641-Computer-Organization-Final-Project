@@ -9,7 +9,7 @@
 
 #define OCC_SAMPLING_DIST 1
 
-uint32_t encode_to_int(std::string string_to_encode)
+uint32_t encode_to_int(const std::string &string_to_encode)
 {
     int encoded_value;
     switch (string_to_encode[0])
@@ -39,7 +39,9 @@ void build_tables(const std::string &reference_string, std::vector<uint32_t> &F_
     std::vector<std::string> rotate_and_sort_strings;
 
     std::string current_rotation = reference_string;
-    for (int i = 0; i < reference_string.length(); ++i)
+    int reference_string_length = reference_string.length();
+
+    for (int i = 0; i < reference_string_length; ++i)
     {
         current_rotation.push_back(current_rotation[0]);
         current_rotation.erase(current_rotation.begin());
@@ -52,22 +54,23 @@ void build_tables(const std::string &reference_string, std::vector<uint32_t> &F_
     //create tables
 
     std::vector<uint32_t> running_occ(4, 0);
+    
 
     for (int i = 0; i < rotate_and_sort_strings.size(); ++i)
     {
         // create F_offsets
         std::string F_string = rotate_and_sort_strings[i].substr(0, 1);
         uint32_t encoded_F = encode_to_int(F_string);
-        if (F_offsets[encoded_F] == reference_string.size())
+        if (F_offsets[encoded_F] == reference_string_length)
         {
             F_offsets[encoded_F] = i;
         }
 
         // create L_column
-        L_column.push_back(rotate_and_sort_strings[i][rotate_and_sort_strings[i].size() - 1]);
+        L_column.push_back(rotate_and_sort_strings[i][reference_string_length - 1]);
 
         // create occ_table
-        uint32_t encoded_L = encode_to_int(rotate_and_sort_strings[i].substr(rotate_and_sort_strings[i].size() - 1));
+        uint32_t encoded_L = encode_to_int(rotate_and_sort_strings[i].substr(reference_string_length - 1));
         ++running_occ[encoded_L];
         if (i % OCC_SAMPLING_DIST == 0)
         {
