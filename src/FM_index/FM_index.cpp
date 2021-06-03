@@ -66,7 +66,7 @@ void build_tables(const std::string &reference_string, std::vector<uint32_t> &F_
         }
 
         // create L_column
-        char c = rotate_and_sort_strings[i][reference_string_length - 1];
+        char c = rotate_and_sort_strings[i][rotate_and_sort_strings[i].size() - 1];
         L_column.push_back(c);
 
         // create occ_table
