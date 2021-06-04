@@ -7,7 +7,7 @@
 #include <fstream>
 #include <sys/mman.h>
 
-#define OCC_SAMPLING_DIST 1
+#define OCC_SAMPLING_DIST 8
 
 uint32_t encode_to_int(const char &string_to_encode)
 {
